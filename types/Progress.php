@@ -40,7 +40,7 @@ class Progress extends AbstractMultiBaseType
             throw new ValidationException('Decimal needed');
         }
 
-        if ($minvalue !== 0 && floatval($rawvalue) < $minvalue) {
+        if (floatval($rawvalue) < $minvalue) {
             throw new ValidationException('Decimal min',$minvalue);
         }
         
