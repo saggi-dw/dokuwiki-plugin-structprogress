@@ -1,7 +1,7 @@
 <?php
 /**
- * DokuWiki Plugin structprogress 
- * Most Code is taken from decimal Type: https://github.com/cosmocode/dokuwiki-plugin-struct/blob/5c37a46b990a9bc0e314c8faa228db6012387b5f/types/Decimal.php 
+ * DokuWiki Plugin structprogress
+ * Most Code is taken from decimal Type: https://github.com/cosmocode/dokuwiki-plugin-struct/blob/5c37a46b990a9bc0e314c8faa228db6012387b5f/types/Decimal.php
  *
  * @author: saggi <saggi@gmx.de>
  */
@@ -15,7 +15,7 @@ use dokuwiki\plugin\struct\types\AbstractMultiBaseType;
 
 class Progress extends AbstractMultiBaseType
 {
-    
+
     protected $config = array(
         'max' => '100',
         'prefix' => '',
@@ -43,7 +43,7 @@ class Progress extends AbstractMultiBaseType
         if (floatval($rawvalue) < $minvalue) {
             throw new ValidationException('Decimal min',$minvalue);
         }
-        
+
         if ($maxvalue !== 0 && floatval($rawvalue) > $maxvalue) {
             throw new ValidationException('Decimal max', $maxvalue);
         }
@@ -58,10 +58,9 @@ class Progress extends AbstractMultiBaseType
     {
         if ($mode == 'xhtml') {
             $maxvalue = 100;
-            if ($this->config['max'] !== '' && floatval($this->config['max']) > 0){
-                $maxvalue = floatval($this->config['max']);
-            }
+            if ($this->config['max'] !== '' && floatval($this->config['max']) > 0) $maxvalue = floatval($this->config['max']);
             $progress = 100*$value/$maxvalue;
+            $progress = (int) ($progress > 0) ? (($progress > 100) ? 100 : $progress) : 0; // Prevents overflow of the bar for imported data (<0 || >max)
             $R->doc .= '<div title="' . hsc($value) . '" class="struct_progress-background_'.hsc($this->config['type']).'">';
             $R->doc .= '<div title="' . hsc($value) . '" style="width: '.$progress.'% ;"
                         class="struct_progress_'.hsc($this->config['type']).'"><p>'.hsc($this->config['prefix'].$value.$this->config['postfix']).'</p></div>';

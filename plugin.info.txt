@@ -1,7 +1,7 @@
 base   structprogress
 author saggi
 email  saggi@gmx.de
-date   2022-11-21
+date   2022-12-14
 name   structprogress plugin
 desc   New struct type: Progress
 url    https://dokuwiki.org/plugin:structprogress
