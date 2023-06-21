@@ -17,10 +17,10 @@ class Progress extends AbstractMultiBaseType
 {
 
     protected $config = array(
-        'max' => '100',
-        'prefix' => '',
+        'max'     => '100',
+        'prefix'  => '',
         'postfix' => '',
-        'type' => 'default',
+        'type'    => 'default',
     );
 
     /**
@@ -32,7 +32,7 @@ class Progress extends AbstractMultiBaseType
         $rawvalue = str_replace(',', '.', $rawvalue); // we accept both
         $minvalue = 0;
         $maxvalue = 100;
-        if ($this->config['max'] !== '' && floatval($this->config['max']) > 0){
+        if ($this->config['max'] !== '' && floatval($this->config['max']) > 0) {
             $maxvalue = floatval($this->config['max']);
         }
 
@@ -41,7 +41,7 @@ class Progress extends AbstractMultiBaseType
         }
 
         if (floatval($rawvalue) < $minvalue) {
-            throw new ValidationException('Decimal min',$minvalue);
+            throw new ValidationException('Decimal min', $minvalue);
         }
 
         if ($maxvalue !== 0 && floatval($rawvalue) > $maxvalue) {
@@ -58,13 +58,16 @@ class Progress extends AbstractMultiBaseType
     {
         if ($mode == 'xhtml') {
             $maxvalue = 100;
-            if ($this->config['max'] !== '' && floatval($this->config['max']) > 0) $maxvalue = floatval($this->config['max']);
-            $progress = 100*$value/$maxvalue;
-            $progress = (int) ($progress > 0) ? (($progress > 100) ? 100 : $progress) : 0; // Prevents overflow of the bar for imported data (<0 || >max)
-            $R->doc .= '<div title="' . hsc($value) . '" class="struct_progress-background_'.hsc($this->config['type']).'">';
-            $R->doc .= '<div title="' . hsc($value) . '" style="width: '.$progress.'% ;"
-                        class="struct_progress_'.hsc($this->config['type']).'"><p>'.hsc($this->config['prefix'].$value.$this->config['postfix']).'</p></div>';
-            $R->doc .= '</div>';
+            if ($this->config['max'] !== '' && floatval($this->config['max']) > 0) {
+                $maxvalue = floatval($this->config['max']);
+            }
+            $progress = 100 * $value / $maxvalue;
+            $progress = (int)($progress > 0) ? (($progress > 100) ? 100 : $progress) : 0; // Prevents overflow of the bar for imported data (<0 || >max)
+            $R->doc   .= '<div title="' . hsc($value) . '" class="struct_progress-background_' . hsc($this->config['type']) . '">';
+            $R->doc   .= '<div title="' . hsc($value) . '" style="width: ' . $progress . '% ;" class="struct_progress_' . hsc($this->config['type']) . '">';
+            $R->doc   .= '<p>' . hsc($this->config['prefix'] . $value . $this->config['postfix']) . '</p>';
+            $R->doc   .= '</div>';
+            $R->doc   .= '</div>';
         } else {
             $R->cdata($value);
         }
@@ -92,9 +95,9 @@ class Progress extends AbstractMultiBaseType
     /**
      * Works like number_format but keeps the decimals as is
      *
-     * @link http://php.net/manual/en/function.number-format.php#91047
+     * @link   http://php.net/manual/en/function.number-format.php#91047
      * @author info at daniel-marschall dot de
-     * @param float $number
+     * @param float  $number
      * @param string $dec_point
      * @param string $thousands_sep
      * @return string
@@ -105,9 +108,13 @@ class Progress extends AbstractMultiBaseType
 
         $tmp = explode('.', $number);
         $out = number_format(abs(floatval($tmp[0])), 0, $dec_point, $thousands_sep);
-        if (isset($tmp[1])) $out .= $dec_point . $tmp[1];
+        if (isset($tmp[1])) {
+            $out .= $dec_point . $tmp[1];
+        }
 
-        if ($was_neg) $out = "-$out";
+        if ($was_neg) {
+            $out = "-$out";
+        }
 
         return $out;
     }
@@ -116,9 +123,9 @@ class Progress extends AbstractMultiBaseType
      * Decimals need to be casted to the proper type for sorting
      *
      * @param QueryBuilder $QB
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $order
+     * @param string       $tablealias
+     * @param string       $colname
+     * @param string       $order
      */
     public function sort(QueryBuilder $QB, $tablealias, $colname, $order)
     {
@@ -129,11 +136,11 @@ class Progress extends AbstractMultiBaseType
      * Decimals need to be casted to proper type for comparison
      *
      * @param QueryBuilderWhere $add
-     * @param string $tablealias
-     * @param string $colname
-     * @param string $comp
-     * @param string|\string[] $value
-     * @param string $op
+     * @param string            $tablealias
+     * @param string            $colname
+     * @param string            $comp
+     * @param string|\string[]  $value
+     * @param string            $op
      */
     public function filter(QueryBuilderWhere $add, $tablealias, $colname, $comp, $value, $op)
     {
@@ -144,7 +151,7 @@ class Progress extends AbstractMultiBaseType
         /** @var QueryBuilderWhere $add Where additionional queries are added to */
         if (is_array($value)) {
             $add = $add->where($op); // sub where group
-            $op = 'OR';
+            $op  = 'OR';
         }
 
         foreach ((array)$value as $item) {

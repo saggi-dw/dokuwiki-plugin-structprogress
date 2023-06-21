@@ -4,28 +4,72 @@
 }
 
 div[class^="struct_progress-background_"] {
-  border: 1px solid @ini_border;
-  width: 100%;
-  height: 20px;     
+    border: 1px solid @ini_border;
+    width: 100%;
+    height: 20px;
+    display: inline-block !important;
+    margin: -1px;
 }
 
 div[class^="struct_progress_"] {
-  background-color: @ini_background_neu;
-  height: 20px;
-  display: block ruby;
+    background-color: @ini_background_neu;
+    height: 20px;
+    display: block ruby !important;
 }
 
-div[class^="struct_progress_"]>p {
-  color: @ini_text;
+div[class^="struct_progress_"] > p {
+    color: @ini_text;
+    display: contents;
 }
 
+//sample for style: rounded
 .struct_progress-background_rounded {
-  border-radius: 6px;
+    border-radius: 6px;
 }
 
 .struct_progress_rounded {
-  border-radius: 6px;
+    border-radius: 6px;
 }
 
+/* Sample styles for userstyles.css: */
+/* --------------------------------- */
+/*
+//sample for style: rounded_red
+.struct_progress-background_rounded_red {
+    border-radius: 6px;
+}
 
+.struct_progress_rounded_red {
+    background-color: lightcoral !important;
+    border-radius: 6px;
+}
 
+//sample for style: rounded_blue
+.struct_progress-background_rounded_blue {
+    border-radius: 6px;
+}
+
+.struct_progress_rounded_blue {
+    background-color: lightblue !important;
+    border-radius: 6px;
+}
+
+//sample for style: red
+.struct_progress_red {
+    background-color: lightcoral !important;
+}
+
+//sample for style: blue
+.struct_progress_blue {
+    background-color: lightblue !important;
+}
+
+//sample for style: gradient
+.struct_progress-background_gradient {
+    background: linear-gradient(
+        to right,
+        lightsalmon 30%,
+        lightgreen
+    );
+}
+ */
